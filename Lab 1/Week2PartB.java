@@ -27,7 +27,7 @@ public class Week2PartB {
                 charClass = "numeric";
             } else if ((c >= 9 && c <= 13) || (c == 32)) {
                 charClass = "whitespace";
-            } else if ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126)){
+            } else if ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126)) {
                 charClass = "punctuation";
             } else if (c > 127) {
                 charClass = "extended character";
@@ -35,7 +35,7 @@ public class Week2PartB {
                 charClass = "unprintable";
             }
             System.out.println("\"" + c + "\"" + " : " + charClass);
-            
+
         }
     }
 }
