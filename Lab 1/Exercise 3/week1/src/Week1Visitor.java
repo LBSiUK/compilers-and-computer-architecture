@@ -13,4 +13,12 @@ public class Week1Visitor extends AbstractParseTreeVisitor<String> implements Ch
     {
         return "\""+ctx.getText()+"\" : uppercase\n";
     }
+    @Override public String visitLowercaseChar(CharactersParser.LowercaseCharContext ctx)
+    {
+        return "\""+ctx.getText()+"\" : lowercase\n";
+    }
+    @Override public String visitNumericalChar(CharactersParser.NumericalCharContext ctx)
+    {
+        return "\""+ctx.getText()+"\" : numeric\n";
+    }
 }

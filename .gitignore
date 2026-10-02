@@ -3,3 +3,6 @@
 .gradle/
 build/
 .antlr/
+*.tokens
+*.interp
+.vscode/

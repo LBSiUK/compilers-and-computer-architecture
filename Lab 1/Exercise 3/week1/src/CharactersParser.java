@@ -1,4 +1,4 @@
-// Generated from /home/giulio/Downloads/Week1/Week1/week1/src/Characters.g4 by ANTLR 4.13.2
+// Generated from /Users/leonb/code/University code/Year 2/Compilers and Computer Architecture/Lab 1/Exercise 3/week1/src/Characters.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class CharactersParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.13.2", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		Uppercase=1, Others=2;
+		Uppercase=1, Lowercase=2, Numerical=3, Others=4;
 	public static final int
 		RULE_charstring = 0, RULE_somechar = 1;
 	private static String[] makeRuleNames() {
@@ -33,7 +33,7 @@ public class CharactersParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "Uppercase", "Others"
+			null, "Uppercase", "Lowercase", "Numerical", "Others"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -127,7 +127,7 @@ public class CharactersParser extends Parser {
 				setState(7); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==Uppercase );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 14L) != 0) );
 			setState(9);
 			match(EOF);
 			}
@@ -165,16 +165,60 @@ public class CharactersParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class NumericalCharContext extends SomecharContext {
+		public TerminalNode Numerical() { return getToken(CharactersParser.Numerical, 0); }
+		public NumericalCharContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitNumericalChar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class LowercaseCharContext extends SomecharContext {
+		public TerminalNode Lowercase() { return getToken(CharactersParser.Lowercase, 0); }
+		public LowercaseCharContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitLowercaseChar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final SomecharContext somechar() throws RecognitionException {
 		SomecharContext _localctx = new SomecharContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_somechar);
 		try {
-			_localctx = new UppercaseCharContext(_localctx);
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(11);
-			match(Uppercase);
+			setState(14);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case Uppercase:
+				_localctx = new UppercaseCharContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(11);
+				match(Uppercase);
+				}
+				break;
+			case Lowercase:
+				_localctx = new LowercaseCharContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(12);
+				match(Lowercase);
+				}
+				break;
+			case Numerical:
+				_localctx = new NumericalCharContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(13);
+				match(Numerical);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -189,16 +233,19 @@ public class CharactersParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0002\u000e\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u0004\u0011\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0001\u0000\u0004\u0000\u0006\b\u0000\u000b\u0000\f\u0000\u0007\u0001"+
-		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0000\u0000\u0002"+
-		"\u0000\u0002\u0000\u0000\f\u0000\u0005\u0001\u0000\u0000\u0000\u0002\u000b"+
-		"\u0001\u0000\u0000\u0000\u0004\u0006\u0003\u0002\u0001\u0000\u0005\u0004"+
-		"\u0001\u0000\u0000\u0000\u0006\u0007\u0001\u0000\u0000\u0000\u0007\u0005"+
-		"\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000\b\t\u0001\u0000"+
-		"\u0000\u0000\t\n\u0005\u0000\u0000\u0001\n\u0001\u0001\u0000\u0000\u0000"+
-		"\u000b\f\u0005\u0001\u0000\u0000\f\u0003\u0001\u0000\u0000\u0000\u0001"+
-		"\u0007";
+		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u000f"+
+		"\b\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000\u0011\u0000"+
+		"\u0005\u0001\u0000\u0000\u0000\u0002\u000e\u0001\u0000\u0000\u0000\u0004"+
+		"\u0006\u0003\u0002\u0001\u0000\u0005\u0004\u0001\u0000\u0000\u0000\u0006"+
+		"\u0007\u0001\u0000\u0000\u0000\u0007\u0005\u0001\u0000\u0000\u0000\u0007"+
+		"\b\u0001\u0000\u0000\u0000\b\t\u0001\u0000\u0000\u0000\t\n\u0005\u0000"+
+		"\u0000\u0001\n\u0001\u0001\u0000\u0000\u0000\u000b\u000f\u0005\u0001\u0000"+
+		"\u0000\f\u000f\u0005\u0002\u0000\u0000\r\u000f\u0005\u0003\u0000\u0000"+
+		"\u000e\u000b\u0001\u0000\u0000\u0000\u000e\f\u0001\u0000\u0000\u0000\u000e"+
+		"\r\u0001\u0000\u0000\u0000\u000f\u0003\u0001\u0000\u0000\u0000\u0002\u0007"+
+		"\u000e";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

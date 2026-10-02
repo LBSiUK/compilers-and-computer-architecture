@@ -1,4 +1,4 @@
-// Generated from /home/giulio/Downloads/Week1/Week1/week1/src/Characters.g4 by ANTLR 4.13.2
+// Generated from /Users/leonb/code/University code/Year 2/Compilers and Computer Architecture/Lab 1/Exercise 3/week1/src/Characters.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -25,4 +25,18 @@ public class CharactersBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitUppercaseChar(CharactersParser.UppercaseCharContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLowercaseChar(CharactersParser.LowercaseCharContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNumericalChar(CharactersParser.NumericalCharContext ctx) { return visitChildren(ctx); }
 }
