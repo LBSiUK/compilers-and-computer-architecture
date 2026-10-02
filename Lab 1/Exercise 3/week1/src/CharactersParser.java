@@ -16,7 +16,8 @@ public class CharactersParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		Uppercase=1, Lowercase=2, Numerical=3, Others=4;
+		Uppercase=1, Lowercase=2, Numerical=3, Whitespace=4, Punctuation=5, Extended=6, 
+		Unprintable=7;
 	public static final int
 		RULE_charstring = 0, RULE_somechar = 1;
 	private static String[] makeRuleNames() {
@@ -33,7 +34,8 @@ public class CharactersParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "Uppercase", "Lowercase", "Numerical", "Others"
+			null, "Uppercase", "Lowercase", "Numerical", "Whitespace", "Punctuation", 
+			"Extended", "Unprintable"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -127,7 +129,7 @@ public class CharactersParser extends Parser {
 				setState(7); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 14L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 254L) != 0) );
 			setState(9);
 			match(EOF);
 			}
@@ -166,12 +168,42 @@ public class CharactersParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class PunctuationContext extends SomecharContext {
+		public TerminalNode Punctuation() { return getToken(CharactersParser.Punctuation, 0); }
+		public PunctuationContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitPunctuation(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class NumericalCharContext extends SomecharContext {
 		public TerminalNode Numerical() { return getToken(CharactersParser.Numerical, 0); }
 		public NumericalCharContext(SomecharContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitNumericalChar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UnprintableContext extends SomecharContext {
+		public TerminalNode Unprintable() { return getToken(CharactersParser.Unprintable, 0); }
+		public UnprintableContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitUnprintable(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ExtendedContext extends SomecharContext {
+		public TerminalNode Extended() { return getToken(CharactersParser.Extended, 0); }
+		public ExtendedContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitExtended(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -185,12 +217,22 @@ public class CharactersParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class WhitespaceContext extends SomecharContext {
+		public TerminalNode Whitespace() { return getToken(CharactersParser.Whitespace, 0); }
+		public WhitespaceContext(SomecharContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CharactersVisitor ) return ((CharactersVisitor<? extends T>)visitor).visitWhitespace(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final SomecharContext somechar() throws RecognitionException {
 		SomecharContext _localctx = new SomecharContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_somechar);
 		try {
-			setState(14);
+			setState(18);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Uppercase:
@@ -217,6 +259,38 @@ public class CharactersParser extends Parser {
 				match(Numerical);
 				}
 				break;
+			case Whitespace:
+				_localctx = new WhitespaceContext(_localctx);
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(14);
+				match(Whitespace);
+				}
+				break;
+			case Punctuation:
+				_localctx = new PunctuationContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(15);
+				match(Punctuation);
+				}
+				break;
+			case Extended:
+				_localctx = new ExtendedContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(16);
+				match(Extended);
+				}
+				break;
+			case Unprintable:
+				_localctx = new UnprintableContext(_localctx);
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(17);
+				match(Unprintable);
+				}
+				break;
 			default:
 				throw new NoViableAltException(this);
 			}
@@ -233,19 +307,23 @@ public class CharactersParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0004\u0011\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u0007\u0015\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0001\u0000\u0004\u0000\u0006\b\u0000\u000b\u0000\f\u0000\u0007\u0001"+
-		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u000f"+
-		"\b\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002\u0000\u0000\u0011\u0000"+
-		"\u0005\u0001\u0000\u0000\u0000\u0002\u000e\u0001\u0000\u0000\u0000\u0004"+
-		"\u0006\u0003\u0002\u0001\u0000\u0005\u0004\u0001\u0000\u0000\u0000\u0006"+
-		"\u0007\u0001\u0000\u0000\u0000\u0007\u0005\u0001\u0000\u0000\u0000\u0007"+
-		"\b\u0001\u0000\u0000\u0000\b\t\u0001\u0000\u0000\u0000\t\n\u0005\u0000"+
-		"\u0000\u0001\n\u0001\u0001\u0000\u0000\u0000\u000b\u000f\u0005\u0001\u0000"+
-		"\u0000\f\u000f\u0005\u0002\u0000\u0000\r\u000f\u0005\u0003\u0000\u0000"+
-		"\u000e\u000b\u0001\u0000\u0000\u0000\u000e\f\u0001\u0000\u0000\u0000\u000e"+
-		"\r\u0001\u0000\u0000\u0000\u000f\u0003\u0001\u0000\u0000\u0000\u0002\u0007"+
-		"\u000e";
+		"\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0003\u0001\u0013\b\u0001\u0001\u0001\u0000"+
+		"\u0000\u0002\u0000\u0002\u0000\u0000\u0019\u0000\u0005\u0001\u0000\u0000"+
+		"\u0000\u0002\u0012\u0001\u0000\u0000\u0000\u0004\u0006\u0003\u0002\u0001"+
+		"\u0000\u0005\u0004\u0001\u0000\u0000\u0000\u0006\u0007\u0001\u0000\u0000"+
+		"\u0000\u0007\u0005\u0001\u0000\u0000\u0000\u0007\b\u0001\u0000\u0000\u0000"+
+		"\b\t\u0001\u0000\u0000\u0000\t\n\u0005\u0000\u0000\u0001\n\u0001\u0001"+
+		"\u0000\u0000\u0000\u000b\u0013\u0005\u0001\u0000\u0000\f\u0013\u0005\u0002"+
+		"\u0000\u0000\r\u0013\u0005\u0003\u0000\u0000\u000e\u0013\u0005\u0004\u0000"+
+		"\u0000\u000f\u0013\u0005\u0005\u0000\u0000\u0010\u0013\u0005\u0006\u0000"+
+		"\u0000\u0011\u0013\u0005\u0007\u0000\u0000\u0012\u000b\u0001\u0000\u0000"+
+		"\u0000\u0012\f\u0001\u0000\u0000\u0000\u0012\r\u0001\u0000\u0000\u0000"+
+		"\u0012\u000e\u0001\u0000\u0000\u0000\u0012\u000f\u0001\u0000\u0000\u0000"+
+		"\u0012\u0010\u0001\u0000\u0000\u0000\u0012\u0011\u0001\u0000\u0000\u0000"+
+		"\u0013\u0003\u0001\u0000\u0000\u0000\u0002\u0007\u0012";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
